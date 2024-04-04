@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url("cloudsnew.jpg");
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            height:300px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .blue-box {
+            background-color: #3498db;    
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .question-box {
+            background-color: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .options-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .options-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color:red;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.back-btn {
+            background-color: #5f58e2;
+        }
+    </style>
+    <title>getfit quiz</title>
+</head>
+<body>  
+       
+    <div class="container">
+        <div id="page1" class="page active">
+           
+            <div class="blue-box">
+                <h1>Enter Your Name</h1>
+            </div>
+            <P>
+                We're happy you are here
+                Let's get to know a little about you!
+            </P>
+            <input type="text" id="nameInput">
+            <button onclick="goToNextPage()">Next</button>
+        </div>
+        
+        <div id="page2" class="page">
+            <div class="blue-box">
+                <h1>Select Your Goals</h1>
+            </div>
+            <div class="options-container">
+                <form id="goalsForm" onsubmit="return false;">
+                    <label><input type="checkbox" id="WeightLoss"> Weight Loss</label>
+                    <label><input type="checkbox" id="WeightGain"> Weight Gain</label>
+                    <label><input type="checkbox" id="StressManagement"> Stress Management</label>
+                    <label><input type="checkbox" id="GainMuscle"> Gain Muscle</label>
+                    <label><input type="checkbox" id="MaintainWeight">Maintain weight</label>
+                </form>
+            </div>
+            <button class="back-btn" onclick="goToPreviousPage()">Back</button>
+            <button onclick="goToNextPage()">Next</button>
+        </div>
+
+        <div id="page3" class="page">
+            <h1>Great! You've just taken a big step on your journey.</h1>
+            <div id="suggestions" class="question-box">
+            <p>Did you know that tracking your food is a scientifically proven method to being successful? It’s called “self-monitoring” and the more consistent you are, the more likely you are to hit your goals. Now, let’s talk about your goal to gain weight.</p>
+            </div>
+
+            <button class="back-btn" onclick="goToPreviousPage()">Back</button>
+            <button onclick="goToNextPage()">Next</button>
+        </div>
+
+        <div id="page4" class="page">
+            <h1>Answer the Question</h1>
+            <div id="answerQuestion" class="question-box">
+                <p>What are the reasons ?</p>
+                <form id="optionsForm" onsubmit="return false;">
+                    <label><input type="radio" name="options" value="A"> general fitness</label>
+                    <label><input type="radio" name="options" value="B"> my healthcare recommended it</label>
+                    <label><input type="radio" name="options" value="C"> for sports</label>
+                    <label><input type="radio" name="options" value="D"> other</label>
+                </form>
+            </div>
+        
+        <div id="page5" class="page">
+            <h1>visit our nutrition page</h1>
+
+        </div>
+            
+            <input type="text" id="answerInput" placeholder="Your Answer">
+            <button onclick="submitAnswer()">Submit Answer</button>
+        </div>
+    </div>
+    
+    <script>
+      
+      let currentPage = 1;
+        let nameInput, goalsForm, suggestions, optionsForm;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            nameInput = document.getElementById("nameInput");
+            goalsForm = document.getElementById("goalsForm");
+            suggestions = document.getElementById("suggestions");
+            optionsForm = document.getElementById("optionsForm");
+
+            showPage(currentPage);
+        });
+
+        function goToNextPage() {
+            if (currentPage === 1) {
+                if (nameInput.value.trim() === "") {
+                    alert("Please enter your name.");
+                    return;
+                }
+            } else if (currentPage === 2) {
+                const selectedGoals = getSelectedGoals();
+                if (selectedGoals.length === 0) {
+                    alert("Please select at least one goal.");
+                    return;
+                }
+                showSuggestions(selectedGoals); 
+            }
+
+            currentPage++;
+            showPage(currentPage);
+        }
+
+        function goToPreviousPage() {
+            currentPage--;
+            showPage(currentPage);
+        }
+
+        function showPage(pageNumber) {
+            const pages = document.querySelectorAll(".page");
+            pages.forEach((page) => page.classList.remove("active"));
+
+            const currentPageElement = document.getElementById(`page${pageNumber}`);
+            currentPageElement.classList.add("active");
+        }
+
+        function getSelectedGoals() {
+            const checkboxes = goalsForm.querySelectorAll("input[type=checkbox]");
+            const selectedGoals = [];
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedGoals.push(checkbox.id);
+                }
+            });
+            return selectedGoals;
+        }
+
+        function showSuggestions(selectedGoals) {
+            suggestions.innerHTML = "";
+
+            selectedGoals.forEach((goal) => {
+                switch (goal) {
+                    case "WeightLoss":
+                        suggestions.innerHTML += "<p>Did you know that tracking your food is a scientifically proven method to being successful? It’s called “self-monitoring” and the more consistent you are, the more likely you are to hit your goals. Do check our nutrition page for a complete diet chart!</p>";
+                        break;
+                    case "WeightGain":
+                        suggestions.innerHTML += "<p>Eat calorie-dense foods such as nuts, seeds, and avocados. Consider a balanced diet with a slight calorie surplus. Do check our nutrition page for a complete diet chart!</p>";
+                        askQuestionForGoal("WeightGain");
+                        break;
+                    case "StressManagement":
+                        suggestions.innerHTML += "<p>Stress management is key in support of a healthy mind and body. We’re here to help.</p>";
+                        break;
+                    case "GainMuscle":
+                        suggestions.innerHTML += "<p>Nutrition is critical to help you build muscle. Track your food to make sure you’re getting enough protein and carbs for optimal metabolism. Do check our nutrition page for a complete diet chart!</p>";
+                        break;
+                }
+            });
+        }
+
+        function askQuestionForGoal(goal) {
+            const questionContainer = document.getElementById("answerQuestion");
+
+            // Clear the content of the question container
+            questionContainer.innerHTML = "";
+
+            if (goal === "WeightGain") {
+                questionContainer.innerHTML += "<p>Have you tried any other methods before?</p>";
+                questionContainer.insertBefore(optionsForm, questionContainer.firstChild);
+            }
+
+            const nextPage = document.getElementById("page4");
+            nextPage.appendChild(questionContainer);
+        }
+
+        function submitAnswer() {
+            const answerInput = document.getElementById("answerInput");
+            const answer = answerInput.value.trim();
+
+            if (answer === "") {
+                alert("Please enter your answer.");
+                return;
+            }
+
+            const answerQuestion = document.getElementById("answerQuestion");
+            answerQuestion.innerHTML = `<p>Your answer: ${answer}</p>`;
+
+            currentPage++;
+            showPage(currentPage);
+        }
+    </script> 
