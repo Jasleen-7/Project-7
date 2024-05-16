@@ -17,11 +17,11 @@
         }
 
         .container {
-            max-width: 600px;
-            height:300px;
-            width: 100%;
-            background-color: #fff;
-            padding: 20px;
+            max-width: 400px;
+            height:200px;
+            width: 90%;
+            background-color: #ffffff;
+            padding: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
@@ -39,7 +39,7 @@
             background-color: #3498db;    
             color: #fff;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 6px;
             margin-bottom: 20px;
         }
 
@@ -54,25 +54,25 @@
 
         .options-container {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .options-container label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         button {
-            background-color:red;
+            background-color:rgb(34, 0, 255);
             color: #fff;
-            padding: 10px 20px;
+            padding: 20px 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
         }
 
         button.back-btn {
-            background-color: #5f58e2;
+            background-color: #130f71;
         }
     </style>
     <title>getfit quiz</title>
@@ -99,21 +99,21 @@
             </div>
             <div class="options-container">
                 <form id="goalsForm" onsubmit="return false;">
-                    <label><input type="checkbox" id="WeightLoss"> Weight Loss</label>
-                    <label><input type="checkbox" id="WeightGain"> Weight Gain</label>
+                    <label><input type="checkbox" id="WeightLoss"> Weight GAIN</label>
+                    <label><input type="checkbox" id="WeightGain"> Weight Loss</label>
                     <label><input type="checkbox" id="StressManagement"> Stress Management</label>
                     <label><input type="checkbox" id="GainMuscle"> Gain Muscle</label>
                     <label><input type="checkbox" id="MaintainWeight">Maintain weight</label>
                 </form>
             </div>
-            <button class="back-btn" onclick="goToPreviousPage()">Back</button>
-            <button onclick="goToNextPage()">Next</button>
+            <button class="back-btn" onclick="goToPreviousPage( )">Back</button>
+            <button onclick="goToNextPage( )">Next</button>
         </div>
 
         <div id="page3" class="page">
-            <h1>Great! You've just taken a big step on your journey.</h1>
+            <h1>Great! You've just taken a big step on your journey!!</h1>
             <div id="suggestions" class="question-box">
-            <p>Did you know that tracking your food is a scientifically proven method to being successful? It’s called “self-monitoring” and the more consistent you are, the more likely you are to hit your goals. Now, let’s talk about your goal to gain weight.</p>
+            <p>Did you know that tracking your food is a scientifically proven method to being successful? It’s called “self-monitoring” and the more consistent you are, the more likely you are on the way to hit your goals. Now, let’s talk about your goal to gain weight.</p>
             </div>
 
             <button class="back-btn" onclick="goToPreviousPage()">Back</button>
